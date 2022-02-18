@@ -16,5 +16,10 @@ def transform_input(user_request):
         }
     }
 
+
 def transform_output(search_result):
-    return [el['_source'] for el in search_result['hits']['hits']]
+    return [{f"{el['_source']['location']}#L{el['_source']['start_line'] + 1}",
+             el['_source']['language'],
+             el['_source']['function_name'],
+             el['_source']['function_body']
+             } for el in search_result['hits']['hits']]
